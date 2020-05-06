@@ -33,26 +33,37 @@ Plan:
   then start over and go through the string again
   the first letter with a count of 1 will be the one, return that index
   would have O(n)
+
+  alternate: go through string and try chacking from the end (last index) of each letter
+  and if it's equal, then return that index
 */
 
 
 var firstUniqChar = function(s) {
-  var counts = {}
-
-  for (var i = 0; i < s.length; i +=1) {
-    if (counts[s[i]]) {
-      counts[s[i]] += 1;
-    } else {
-      counts[s[i]] = 1;
-    }
-  }
-  console.log(counts);
-  for (var j = 0; j < s.length; j += 1) {
-    if (counts[s[j]] === 1) {
-      return j;
+  var sLength = s.length;
+  for (var i = 0; i < sLength; i += 1) {
+    if (s.lastIndexOf(s[i]) === s.indexOf(s[i])) {
+      return i;
     }
   }
   return -1;
+
+
+  // var counts = {}
+
+  // for (var i = 0; i < s.length; i +=1) {
+  //   if (counts[s[i]]) {
+  //     counts[s[i]] += 1;
+  //   } else {
+  //     counts[s[i]] = 1;
+  //   }
+  // }
+  // for (var j = 0; j < s.length; j += 1) {
+  //   if (counts[s[j]] === 1) {
+  //     return j;
+  //   }
+  // }
+  // return -1;
 };
 
 // testing
