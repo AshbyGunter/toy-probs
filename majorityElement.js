@@ -31,14 +31,26 @@ Plan: make a count of each number, store in an object
 
 var majorityElement = function(nums) {
   // counts
+  var counts = {};
   // length of array
+  var length = nums.length;
+  var target = length / 2;
 
   // loop through array
+  for (var i = 0; i < length; i += 1) {
     // if there is a count for current
+    if (counts[nums[i]]) {
       // increment by 1
-      // if greater than n/2, return that number
-    // else
+      counts[nums[i]] += 1;
+    } else {
       // give it a count of 1
+      counts[nums[i]] = 1;
+    }
+    // if greater than n/2, return that number
+    if (counts[nums[i]] > target) {
+      return nums[i];
+    }
+  }
 };
 
 // testing
@@ -48,7 +60,7 @@ console.log(result1); // 1
 
 var test2 = [2, 2, 3];
 result2 = majorityElement(test2);
-console.log(result2);  //
+console.log(result2);  // 2
 
 var test3 = [4, 5, 5];
 result3 = majorityElement(test3);
