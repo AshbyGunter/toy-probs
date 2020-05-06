@@ -46,11 +46,51 @@ var firstUniqChar = function(s) {
       counts[s[i]] = 1;
     }
   }
+  console.log(counts);
   for (var j = 0; j < s.length; j += 1) {
-    if (counts[s[i]] === 1) {
-      return i;
+    if (counts[s[j]] === 1) {
+      return j;
     }
   }
   return -1;
 };
+
+// testing
+var test1 = '';
+result1 = firstUniqChar(test1);
+console.log(result1); // -1
+
+var test2 = 'a';
+result2 = firstUniqChar(test2);
+console.log(result2);  // 0
+
+var test3 = 'aa';
+result3 = firstUniqChar(test3);
+console.log(result3);  // -1
+
+var test4 = 'aaa';
+result4 = firstUniqChar(test4);
+console.log(result4);  // -1
+
+var test5 = 'ab';
+result5 = firstUniqChar(test5);
+console.log(result5);  // 0
+
+var test6 = 'aaab';
+result6 = firstUniqChar(test6);
+console.log(result6);  // 3
+
+var test7 = 'abb';
+result7 = firstUniqChar(test7);
+console.log(result7);  // 0
+
+var test8 = 'leetcode';
+result8 = firstUniqChar(test8);
+console.log(result8);  // 0
+
+var test9 = 'loveleetcode';
+result9 = firstUniqChar(test9);
+console.log(result9);  // 2
+
+
 
