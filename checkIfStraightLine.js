@@ -33,22 +33,27 @@ if all match, return true
 */
 
 var checkStraightLine = function(coordinates) {
-  // targetSlope
+  var targetSlope;
 
-  // findSlope = function (pointOne, pointTwo)
-    // calculate rise
-    // calculate run
-    // return rise over run
+  const findSlope = function (pointOne, pointTwo) {
+    const rise = pointTwo[1] - pointOne[1];
+    const run = pointTwo[0] - pointOne[0];
+    return rise / run;
+  }
 
-  // if coordinates.length is 2
-    // return true
+  if (coordinates.length === 2) {
+    return true
+  }
 
-  // targetSlope = findSlope(coordinates[0], coordinates[1])
+  targetSlope = findSlope(coordinates[0], coordinates[1])
   // loop from 2 to coordinates.length
-    // if findSlope(coordinates[1], coordinates[i]) !== targetSlope
-      // return false
+  for (var i = 2; i < coordinates.length; i += 1) {
+    if (findSlope(coordinates[1], coordinates[i]) !== targetSlope) {
+      return false;
+    }
+  }
 
-  // return true
+  return true;
 };
 
 // testing
