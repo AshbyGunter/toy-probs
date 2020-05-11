@@ -67,3 +67,41 @@ run fill helper
 var floodFill = function(image, sr, sc, newColor) {
 
 };
+
+
+// testing
+var test1 = [[1]];
+result1 = floodFill(test1, 0, 0, 2);
+console.log(result1); // [[2]]
+
+var test2 = [[1, 1], [1, 1]];
+result2 = floodFill(test2, 1, 1, 2);
+console.log(result2);  // [[2, 2], [2, 2]]
+
+var test3 = [[1,1,1],[1,1,0],[1,0,1]];
+result3 = floodFill(test3, 1, 1, 2);
+console.log(result3);  // [[2,2,2],[2,2,0],[2,0,1]]
+
+// var test4 = ;
+// result4 = floodFill(test4);
+// console.log(result4);
+
+// var test5 = ;
+// result5 = floodFill(test5);
+// console.log(result5);
+
+// var test6 = ;
+// result6 = floodFill(test6);
+// console.log(result6);
+
+// var test7 = ;
+// result7 = floodFill(test7);
+// console.log(result7);
+
+// var test8 = ;
+// result8 = floodFill(test8);
+// console.log(result8);
+
+// var test9 = ;
+// result9 = floodFill(test9);
+// console.log(result9);
