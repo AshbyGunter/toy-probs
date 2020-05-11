@@ -65,29 +65,42 @@ run fill helper
 */
 
 var floodFill = function(image, sr, sc, newColor) {
-  // var copy
-  // var targetColor
+  let targetColor = image[sr][sc];
+  const copy = [];
+  for (let i = 0; i < image.length; i += 1) {
+    let rowCopy = image[i].slice();
+    copy.push(rowCopy);
+  }
 
-  // const isInBounds =  function(r, c) {
-  //   if ((r >= 0) && (r < image[0].length) && (c >= 0) && (b < image.length)) { return true }
-  //   return false;
-  // }
+  const isInBounds = function(r, c) {
+    if ((r >= 0) && (r < image.length) && (c >= 0) && (c < image[0].length)) {
+      return true;
+    }
+    return false;
+  }
 
-  // const fill = function(row, col) {
-  // if color at row & col is NOT target color,
-  //   return
-  // if left isInBounds,
-    // fill on left
-  // if top isInBounds,
-    // fill on top
-  // if right isInBounds,
-    // fill on right
-  // if bottom isInBounds,
-    // fill on bottom
-  // }
+  const fill = function(row, col) {
+    // if color at row & col is NOT target color,
+    if (copy[row][col] !== targetColor) {
+      return;
+    }
+    copy[row][col] = newColor;
+    if (isInBounds(row, col - 1)) {
+      fill(row, col - 1);
+    }
+    if (isInBounds(row - 1, col)) {
+      fill(row - 1, col);
+    }
+    if (isInBounds(row, col + 1)) {
+      fill(row, col + 1);
+    }
+    if (isInBounds(row + 1, col)) {
+      fill(row + 1, col);
+    }
+  }
 
-  // fill(sr, sc);
-  // return copy
+  fill(sr, sc);
+  return copy;
 };
 
 
