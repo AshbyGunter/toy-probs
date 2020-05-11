@@ -80,26 +80,19 @@ var floodFill = function(image, sr, sc, newColor) {
   }
 
   const fill = function(row, col) {
-    // if color at row & col is NOT target color,
-    if (copy[row][col] !== targetColor) {
+    if (!isInBounds(row, col) || copy[row][col] !== targetColor) {
       return;
     }
     copy[row][col] = newColor;
-    if (isInBounds(row, col - 1)) {
-      fill(row, col - 1);
-    }
-    if (isInBounds(row - 1, col)) {
-      fill(row - 1, col);
-    }
-    if (isInBounds(row, col + 1)) {
-      fill(row, col + 1);
-    }
-    if (isInBounds(row + 1, col)) {
-      fill(row + 1, col);
-    }
+    fill(row, col - 1);
+    fill(row - 1, col);
+    fill(row, col + 1);
+    fill(row + 1, col);
   }
 
-  fill(sr, sc);
+  if (newColor !== targetColor) {
+    fill(sr, sc);
+  }
   return copy;
 };
 
@@ -117,26 +110,33 @@ var test3 = [[1,1,1],[1,1,0],[1,0,1]];
 result3 = floodFill(test3, 1, 1, 2);
 console.log(result3);  // [[2,2,2],[2,2,0],[2,0,1]]
 
-// var test4 = ;
-// result4 = floodFill(test4);
-// console.log(result4);
+var test4 =
+[
+[1, 0, 0, 0],
+[0, 1, 1, 1],
+[0, 1, 0, 1],
+[0, 1, 1, 1]
+]
+;
+result4 = floodFill(test4, 1, 3, 2);
+console.log(result4);  // [[1, 0, 0, 0], [0, 2, 2, 2], [0, 2, 0, 2], [0, 2, 2, 2]]
 
-// var test5 = ;
-// result5 = floodFill(test5);
-// console.log(result5);
+var test5 =
+[
+[0, 0, 0, 0],
+[0, 1, 1, 1],
+[0, 1, 0, 1],
+[0, 1, 1, 1]
+]
+;
+result5 = floodFill(test5, 3, 0, 2);
+console.log(result5);  // [[2, 2, 2, 2], [2, 1, 1, 1], [2, 1, 0, 1], [2, 1, 1, 1]]
 
-// var test6 = ;
-// result6 = floodFill(test6);
-// console.log(result6);
+var test6 = [[0,0,0],[0,1,1]];
+result6 = floodFill(test6, 1, 1, 1);
+console.log(result6);  // [[0,0,0],[0,1,1]]
 
-// var test7 = ;
-// result7 = floodFill(test7);
-// console.log(result7);
+var test7 = [[1,1,1],[1,1,0],[1,0,1]];
+result7 = floodFill(test7, 1, 1, 2);
+console.log(result7);  // [[2,2,2],[2,2,0],[2,0,1]]
 
-// var test8 = ;
-// result8 = floodFill(test8);
-// console.log(result8);
-
-// var test9 = ;
-// result9 = floodFill(test9);
-// console.log(result9);
