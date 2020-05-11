@@ -65,7 +65,29 @@ run fill helper
 */
 
 var floodFill = function(image, sr, sc, newColor) {
+  // var copy
+  // var targetColor
 
+  // const isInBounds =  function(r, c) {
+  //   if ((r >= 0) && (r < image[0].length) && (c >= 0) && (b < image.length)) { return true }
+  //   return false;
+  // }
+
+  // const fill = function(row, col) {
+  // if color at row & col is NOT target color,
+  //   return
+  // if left isInBounds,
+    // fill on left
+  // if top isInBounds,
+    // fill on top
+  // if right isInBounds,
+    // fill on right
+  // if bottom isInBounds,
+    // fill on bottom
+  // }
+
+  // fill(sr, sc);
+  // return copy
 };
 
 
