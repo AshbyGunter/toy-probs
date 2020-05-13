@@ -55,6 +55,10 @@ if that element matches the one to the right, then the search proceeds to the ri
 --set start to middle + 2 and recursively call
 otherwise search proceeds to the left
 --set end to middle - 2 and recursively call
+
+correction - once the middle is decided, the way to check further is dependant on if the number of
+elements to each side is even or odd!!
+
 */
 
 /*
@@ -62,22 +66,45 @@ otherwise search proceeds to the left
  * @return {number}
  */
 var singleNonDuplicate = function(nums) {
-  // var search = function(start, end) {
-    // let middle = Math.floor((end - start) / 2) + start
-    // if (start === end)
-      // return nums[start]
-    // if (end - start + 1 === 3)
-      // if (nums[start] === nums[start + 1])
-        // return nums[end]
-      // return nums[start]
-    // if ((nums[middle] !== nums[middle - 1]) && (nums[middle] !== nums[middle + 1]))
-      // return nums[middle]
-    // if (nums[middle] === nums[middle + 1])
-      // return search(middle + 2, end)
-    // retun search(start, middle - 2)
-  // }
+  var search = function(start, end) {
+    let middle = Math.floor((end - start) / 2) + start;
+    // if only one element, it is the answer
+    if (start === end) {
+      return nums[start];
+    }
+    // if 3 elements, return the one that does not match the middle
+    if (end - start + 1 === 3) {
+      if (nums[start] === nums[start + 1]) {
+        return nums[end];
+      }
+      return nums[start];
+    }
 
-  // return search(0, nums.length - 1);
+    // if middle is even, singleton could be middle and match on right if sorted until mid
+    if (middle % 2 === 0) {
+      // if mid does not match left or right
+      if ((nums[middle] !== nums[middle - 1]) && (nums[middle] !== nums[middle + 1])) {
+        return nums[middle];
+      }
+      // if mid matches right
+      if (nums[middle] === nums[middle + 1]) {
+        return search(middle + 2, end);
+      }
+      // search left side
+      return search(start, middle - 2);
+    }
+
+    // otherwise if middle is odd, singleton can not be middle and match on left if sorted until mid
+    // if mid matches left
+    if (nums[middle] === nums[middle - 1]) {
+      // search on right side
+      return search(middle + 1, end);
+    }
+    // search on left side
+    return search(start, middle - 1);
+  }
+
+  return search(0, nums.length - 1);
 };
 
 // testing
@@ -109,12 +136,17 @@ var test7 = [3,3,7,7,10,11,11];
 result7 = singleNonDuplicate(test7);
 console.log(result7);  // 10
 
-// var test8 = ;
-// result8 = singleNonDuplicate(test8);
-// console.log(result8);  //
+var test8 = [1,1,2,3,3];
+result8 = singleNonDuplicate(test8);
+console.log(result8);  // 2
 
-// var test9 = ;
-// result9 = singleNonDuplicate(test9);
-// console.log(result9);  //
-
-
+/*
+[1] --> end case!
+[1, 1 ,2] --> end case!
+[1,1, 2 ,3,3]  --> len 5, mid 2, can be middle, match would be to right
+[1,1,2, 2 ,3,4,4] --> len 7, mid 3, cannot be middle, match would be to left
+[1,1,2,2, 3 ,4,4,5,5] --> len 9, mid 4, can be middle, match would be to right
+[1,1,2,2,3, 3 ,4,5,5,6,6] --> len 11, mid 5, cannot be middle, match would be to left
+[1,2,2,3,3,4, 4 ,5,5,6,6,7,7] --> len 13, mid 6, can be middle, match would be to right
+[1,1,2,2,3,3,4, 4 ,5,5,6,6,7,7,8] --> 15, cannot be middle, match to left
+*/
