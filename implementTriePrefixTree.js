@@ -49,16 +49,27 @@ Trie.prototype._findChild = function(char) {
  otherwise, call insert with the word minus the first character
  */
 Trie.prototype.insert = function(word) {
-  // let child;
-  // if _findChild is -1
+  let child;
+  let firstLetter = word.slice(0,1);
+  let childIndex = this._findChild(firstLetter);
+  if (childIndex === -1) {
     // create a new node for the child
+    child = new Trie();
     // assign the value to be the 1st character in word
-  // else
+    child.value = firstLetter;
+    this.children.push(child);
+  } else {
     // set child to the indicatd node from the children array
+    child = this.children[childIndex];
+  }
   // if the length of word is 1
+  if (word.length === 1) {
     // set child's end of word bool to true
-  // else
+    child.isEndOfWord = true;
+  } else {
     // call insert with word less the first character
+    child.insert(word.slice(1));
+  }
 };
 
 /*
@@ -107,8 +118,19 @@ Trie.prototype.startsWith = function(prefix) {
 
  // testing
  var obj = new Trie();
- var child = new Trie();
- child.value = 'a';
- obj.children.push(child);
+//  var child = new Trie();
+//  child.value = 'a';
+//  obj.children.push(child);
+// console.log(obj._findChild('b'));
+obj.insert('apple');
 console.log(obj);
-console.log(obj._findChild('b'));
+console.log(obj.children[0]);
+console.log(obj.children[0].children[0]);
+console.log(obj.children[0].children[0].children[0]);
+console.log(obj.children[0].children[0].children[0].children[0]);
+console.log(obj.children[0].children[0].children[0].children[0].children[0]);
+obj.insert('app');
+console.log(obj.children);
+console.log(obj.children[0].children);
+console.log(obj.children[0].children[0].children);
+
