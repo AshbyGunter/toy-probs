@@ -87,16 +87,17 @@ return result of call to search using word minus the first letter
 
  */
 Trie.prototype.search = function(word) {
-  // if length of word is 0
-    // return false
-  // childIndex = _findChild w/ first letter of word
-  // if childIndex is -1
-    // return false
-  // if length of word is 1
-    // if children at childIndex is end of word
-      // return true
-    // return false
-  // return this.children[childIndex].search(word.slice(1))
+  let childIndex = this._findChild(word.slice(0,1));
+  if (childIndex === -1) {
+    return false;
+  }
+  if (word.length === 1) {
+    if (this.children[childIndex].isEndOfWord) {
+      return true;
+    }
+    return false
+  }
+  return this.children[childIndex].search(word.slice(1));
 };
 
 /*
@@ -105,7 +106,14 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
-
+  let childIndex = this._findChild(prefix.slice(0,1));
+  if (childIndex === -1) {
+    return false;
+  }
+  if (prefix.length === 1) {
+    return true;
+  }
+  return this.children[childIndex].startsWith(prefix.slice(1));
 };
 
 /*
@@ -117,20 +125,30 @@ Trie.prototype.startsWith = function(prefix) {
  */
 
  // testing
- var obj = new Trie();
+//  var obj = new Trie();
 //  var child = new Trie();
 //  child.value = 'a';
 //  obj.children.push(child);
 // console.log(obj._findChild('b'));
-obj.insert('apple');
-console.log(obj);
-console.log(obj.children[0]);
-console.log(obj.children[0].children[0]);
-console.log(obj.children[0].children[0].children[0]);
-console.log(obj.children[0].children[0].children[0].children[0]);
-console.log(obj.children[0].children[0].children[0].children[0].children[0]);
-obj.insert('app');
-console.log(obj.children);
-console.log(obj.children[0].children);
-console.log(obj.children[0].children[0].children);
+// obj.insert('apple');
+// obj.insert('bobby');
+// obj.insert('happy');
+// obj.insert('gel');
+// console.log(obj.search('apple'));
+// console.log(obj.search('app'));
+// console.log(obj.startsWith('a'));
+// console.log(obj.startsWith('bo'));
+// console.log(obj.startsWith('hap'));
+// console.log(obj.startsWith('gel'));
+// console.log(obj.startsWith('appl'));
+
+// console.log(obj.startsWith('boc'));
+// console.log(obj.startsWith('apl'));
+// console.log(obj.startsWith('x'));
+
+// obj.insert('app');
+// console.log(obj.search('app'));
+// console.log(obj.search('joey'));
+// console.log(obj.search('happy'));
+// console.log(obj.search('gel'));
 
