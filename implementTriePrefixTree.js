@@ -1,5 +1,5 @@
 /*
-
+implementTriePrefixTree
 Implement a trie with insert, search, and startsWith methods.
 
 Example:
@@ -65,9 +65,27 @@ Trie.prototype.insert = function(word) {
  * Returns if the word is in the trie.
  * @param {string} word
  * @return {boolean}
+Plan:
+search for first letter of word in children
+if it does not exist, return false
+otherwise it does exist, so need to check some more stuff
+if this is the last character of word
+  and if the child is an end of word, return true
+  else return false
+return result of call to search using word minus the first letter
+
  */
 Trie.prototype.search = function(word) {
-
+  // if length of word is 0
+    // return false
+  // childIndex = _findChild w/ first letter of word
+  // if childIndex is -1
+    // return false
+  // if length of word is 1
+    // if children at childIndex is end of word
+      // return true
+    // return false
+  // return this.children[childIndex].search(word.slice(1))
 };
 
 /*
