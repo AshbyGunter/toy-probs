@@ -1,4 +1,6 @@
 /*
+      Odd Even Linked List problem from leetcode: https://leetcode.com/
+
 oddEvenLinkedList
 Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
 
@@ -54,27 +56,37 @@ set the last odd's next to be the head of the even list
 set the last even's next to be null
 */
 var oddEvenList = function(head) {
-  // firstEven
-  // lastOdd
-  // lastEven
-  // next
-  // isOdd
+  let firstEven;
+  let isOdd;
+  let lastOdd;
+  let lastEven;
+  let next;
 
-  // if head is null
-    // return null
-  // if head.next is not null
-    // isOdd = true
-    // lastOdd = head
-    // first even = head.next
-    // lastEven = head.next
-    // next = lastEven.next
-    // while next is not null
-      // if isOdd
-        // lastOdd.next = next
-        // lastOdd = next
-      // else
-        // lastEven.next = next
-        // lastEven = next
+  if (head === null) {
+    return null;
+  }
+  if (head.next !== null) {
+    firstEven = head.next;
+    isOdd = true;
+    lastOdd = head;
+    lastEven = head.next;
+    next = lastEven.next;
+    while (next !== null) {
+      if (isOdd) {
+        lastOdd.next = next;
+        lastOdd = next;
+        isOdd = false;
+      } else {
+        lastEven.next = next;
+        lastEven = next;
+        isOdd = true;
+      }
+      next = next.next;
+    }
 
-  // return head
+    lastOdd.next = firstEven;
+    lastEven.next = null;
+  }
+
+  return head;
 };
