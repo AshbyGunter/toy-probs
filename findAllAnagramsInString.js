@@ -59,22 +59,71 @@ if not, move to next letter
 */
 
 var findAnagrams = function(s, p) {
-  // results array, starts empty
+  let results = [];
 
-  // var isAnagramRun = function (start)
-    // copy s
-    // loop from 0 to length of s
-      // if p at start + loop count is not in copy s
-        // return false
-      // remove the character from copy s
-    // return true
+  var isAnagramRun = function (start) {
+    var copyP = p;
+    for (let i = 0; i < p.length; i += 1) {
+      let targetIndex = copyP.indexOf(s[start + i]);
+      if (targetIndex === -1) {
+        return false;
+      }
+      copyP = copyP.slice(0, targetIndex) + copyP.slice(targetIndex + 1);
+    }
+    return true;
+  }
 
-  // if s is empty or s is longer than p
-    // return results
+  if ((s === '') || (p.length > s.length)) {
+    return results;
+  }
 
-  // loop from start of p to length of s away from end of p
-    // if isAnagramRun
-      // add current index to results
+  const loopTo = s.length - p.length;
+  for (let j = 0; j <= loopTo ; j += 1) {
+    if (isAnagramRun(j)) {
+      results.push(j);
+    }
+  }
 
-  // return results;
+  return results;
 };
+
+// testing
+var testS1 = '';
+var testP1 = '';
+result1 = findAnagrams(testS1, testP1);
+console.log(result1);  // []
+
+var testS2 = 'a';
+var testP2 = 'ab';
+result2 = findAnagrams(testS2, testP2);
+console.log(result2);  // []
+
+var testS3 = 'abc';
+var testP3 = 'abc';
+result3 = findAnagrams(testS3, testP3);
+console.log(result3);  // [0]
+
+var testS4 = 'abc';
+var testP4 = 'abs';
+result4 = findAnagrams(testS4, testP4);
+console.log(result4);  // []
+
+var testS5 = 'hotdogs';
+var testP5 = 'hot';
+result5 = findAnagrams(testS5, testP5);
+console.log(result5);  // [0]
+
+var testS6 = 'cbaebabacd';
+var testP6 = 'abc';
+result6 = findAnagrams(testS6, testP6);
+console.log(result6);  // [0, 6]
+
+var testS7 = 'abab';
+var testP7 = 'ab';
+result7 = findAnagrams(testS7, testP7);
+console.log(result7);  // [0, 1, 2]
+
+var testS8 = 'hotdogs';
+var testP8 = 'dog';
+result8 = findAnagrams(testS8, testP8);
+console.log(result8);  // [3]
