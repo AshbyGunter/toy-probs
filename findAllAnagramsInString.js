@@ -42,7 +42,7 @@ The substring with start index = 2 is "ab", which is an anagram of "ab".
 O: 2 strings, s and p made of lowercase letters
     s will be no longer than 20
     p will be non-empty and no longer than 100
-I: an array, the starting indices in string p where anagrams of s exist
+I: an array, the starting indices in string s where anagrams of p exist
 C: none given
 E: s is empty, no anagrams exist, p longer than s
 Plan:
@@ -56,10 +56,6 @@ if they're all here, add this start index to the results pool
 if not, move to next letter
 
 --use a helper function
-*/
-
-var findAnagrams = function(s, p) {
-  let results = [];
 
   var isAnagramRun = function (start) {
     var copyP = p;
@@ -81,6 +77,69 @@ var findAnagrams = function(s, p) {
   for (let j = 0; j <= loopTo ; j += 1) {
     if (isAnagramRun(j)) {
       results.push(j);
+    }
+  }
+  -- the above worked as brute force ut then has time out issues with very large strings
+
+
+Plan #2: get more efficient!
+use a sliding window algorithm
+
+check if s is empty, if so, return empty array
+if p is longer than s, return empty array
+
+we need to have a start index for where we first see a letter in the anagram
+if a letter is not in the anagram, set that start to the next letter index to move on
+once we see a letter in the anagram, tally it from the anagram target and move on
+one the anagram is completed, we add that start index to the results,
+  then we add the letter at the start index back into the possible tally for the anagram
+
+
+*/
+
+var findAnagrams = function(s, p) {
+  let results = [];
+  let startIndex = 0;
+  let anagramTally = {};
+  let anagramLengthLeft;
+
+  const resetAnagramTally = function() {
+    anagramLengthLeft = p.length;
+    anagramTally = {};
+    for (let i = 0; i < p.length; i += 1) {
+      if (!anagramTally[p[i]]) {
+        anagramTally[p[i]] = 0;
+      }
+      anagramTally[p[i]] += 1;
+    }
+  }
+
+  if ((s === '') || (p.length > s.length)) {
+    return results;
+  }
+
+  resetAnagramTally();
+  for (let i = 0; i < s.length; i += 1) {
+    let currLetter = s[i];
+    if (anagramTally[currLetter] === undefined) {
+      startIndex = i + 1;
+      if (anagramLengthLeft < p.length)
+        resetAnagramTally();
+    } else {
+      while (anagramTally[currLetter] === 0) {
+        anagramTally[s[startIndex]] += 1;
+        anagramLengthLeft += 1;
+        startIndex += 1;
+      }
+
+      anagramTally[currLetter] -= 1;
+      anagramLengthLeft -= 1;
+      if (anagramLengthLeft === 0) {
+        results.push(startIndex);
+        anagramTally[s[startIndex]] += 1;
+        startIndex += 1;
+        anagramLengthLeft += 1;
+      }
     }
   }
 
