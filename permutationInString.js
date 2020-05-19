@@ -47,31 +47,52 @@ return false if we get all the way through the loop
 */
 
 var checkInclusion = function(s1, s2) {
-  // let start = 0
-  // let totalLeft;
-  // let s1Count = {};
+  let start;
+  let totalLeft;
+  let s1Count;
 
-  // const resetCount = function() {
-    // totalLeft = s1.length;
+  const resetCount = function() {
+    s1Count = {};
+    totalLeft = s1.length;
     // loop through s1
+    for (let i = 0; i < totalLeft; i += 1) {
       // add count of each letter to s1Count
-  // }
+      if (!s1Count[s1[i]]) {
+        s1Count[s1[i]] = 1;
+      } else {
+        s1Count[s1[i]] += 1;
+      }
+    }
+  }
 
-  // resetCount();
-  // loop through s2
-    // if start + totalLeft > s2.length
-      // break
-    // if current letter is not in s1
-      // start = i + 1;
-      // continue
-    // if the count of the current letter is 0
-      // loop until the count of current letter is 1
-        // increment count for letter at start by 1
-        // increment totalLeft by 1
-    // decrement count of current letter
-    // decrement count of totalLeft
-    // if totalLeft is 0
-      // return true
+  resetCount();
+  start = 0;
+  for (let i = 0; i < s2.length; i += 1) {
+    if (start + totalLeft > s2.length) {
+      break;
+    }
+    if (s1Count[s2[i]] === undefined) {
+      start = i + 1;
+      resetCount();
+    } else {
+      while( ((s1Count[s2[i]] === 0) && (start < i)) || (i - start > s1.length)) {
+        s1Count[s2[start]] += 1;
+        totalLeft += 1;
+        start += 1;
+      }
+      s1Count[s2[i]] -= 1;
+      totalLeft -= 1;
+      if (totalLeft === 0) {
+        return true;
+      }
+    }
+  }
 
-  // return false;
+  return false;
 };
+
+// testing
+var test1S1 = 'adc';
+var test1S2 = 'dcda';
+var result1 = checkInclusion(test1S1, test1S2);
+console.log(result1);
