@@ -39,9 +39,7 @@ The total time limit for this problem has been reduced by 75% for C++, and 50% f
 
 
 var StockSpanner = function() {
-  // storage for each new price
   this.prices = [];
-  // store the last span
   this.spans = [];
 };
 
