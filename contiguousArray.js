@@ -80,20 +80,23 @@ var findMaxLength = function(nums) {
   let runningTotal = 0;
   let maxLength = 0;
 
-  // loop through nums
-    // if current is 1
-      // add 1 to runningTotal
-    // else
-      // subtract 1 from runningTotal
+  for (let i = 0; i < nums.length; i += 1) {
+    if (nums[i] === 1) {
+      runningTotal += 1;
+    } else {
+      runningTotal -= 1;
+    }
 
-    // if runingTotal is 0
-      // update max to length of nums up to current
-    // else if runningTotal is defined in object
-      // update max to be larger of current max of current index - index of 1st occurrance of runningTotal
-    // else // runningTotal hasn't occurred yet
-      // add runningTotal: current index to object
+    if (runningTotal === 0) {
+      maxLength = i + 1;
+    } else if (firstIndexOfTotals[runningTotal] !== undefined) {
+      maxLength = Math.max(maxLength, i - firstIndexOfTotals[runningTotal]);
+    } else {
+      firstIndexOfTotals[runningTotal] = i;
+    }
+  }
 
-  // return maxLength
+  return maxLength;
 };
 
 // testing
@@ -105,25 +108,25 @@ var test2 = [1];
 result2 = findMaxLength(test2);
 console.log(result2, 'should be 0');
 
-var test3 = ;
+var test3 = [0, 0];
 result3 = findMaxLength(test3);
-console.log(result3, 'should be ');
+console.log(result3, 'should be 0');
 
-var test4 = [0, 0];
+var test4 = [0, 0, 0];
 result4 = findMaxLength(test4);
-console.log(result4, 'should be ');
+console.log(result4, 'should be 0');
 
 var test5 = [1, 1, 1];
 result5 = findMaxLength(test5);
-console.log(result5, 'should be ');
+console.log(result5, 'should be 0');
 
 var test6 = [0, 1];
 result6 = findMaxLength(test6);
-console.log(result6, 'should be ');
+console.log(result6, 'should be 2');
 
 var test7 = [1, 0];
 result7 = findMaxLength(test7);
-console.log(result7, 'should be ');
+console.log(result7, 'should be 2');
 
 var test8 = [0, 0, 1, 1];
 result8 = findMaxLength(test8);
@@ -139,4 +142,4 @@ console.log(result11, 'should be 4');
 
 var test12 = [0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1];
 result12 = findMaxLength(test12);
-console.log(result12, 'should be 10');
+console.log(result12, 'should be 12');
