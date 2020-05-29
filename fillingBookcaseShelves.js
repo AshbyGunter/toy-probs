@@ -43,6 +43,7 @@ current shelf width
 
 
 go through list of books
+
 if it fits in shelf width
 - add it's width to current width
 - set current shelf heigh to larger of current max or current book's height
@@ -50,9 +51,24 @@ if it doesn't fit
 - add current height to bookcase height
 - set current width to shelf_width - current book width
 
-after looping, add current height to bookcase
-
+after looping, add last current height to bookcase
 return bookcase height
+
+
+
+BUT - problem in my interpretation is that we can skip to the next shelf if it's beneficial
+
+SO
+if current book does not fit on shelf --> start new shelf and add the book to it
+if it's the first book for the shelf --> add it to the shelf
+
+books: 1/1, 1/2, 1/2  & width of 2
+current algo would go
+1/1 & 1/2 for height of 2, next shelf 1/2 for height of 2, total 4
+when min would be 1/1 for height of 1 & 1/2 & 1/2 for height of 2 with a total of 3
+
+
+
 
 */
 
