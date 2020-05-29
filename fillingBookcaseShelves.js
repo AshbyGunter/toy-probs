@@ -44,7 +44,7 @@ current shelf width
 
 go through list of books
 if it fits in shelf width
-- subtract it's width from current width
+- add it's width to current width
 - set current shelf heigh to larger of current max or current book's height
 if it doesn't fit
 - add current height to bookcase height
@@ -55,3 +55,73 @@ after looping, add current height to bookcase
 return bookcase height
 
 */
+
+var minHeightShelves = function(books, shelf_width) {
+  let bookcaseHeight = 0;
+  let currHeight = 0;
+  let currWidth = 0;
+  let book;
+
+  for (let i = 0; i < books.length; i += 1) {
+    book = books[i];
+    if (currWidth + book[0] <= shelf_width) {
+      currWidth += book[0];
+      currHeight = Math.max(currHeight, book[1]);
+    } else {
+      bookcaseHeight += currHeight;
+      currWidth = book[0];
+      currHeight = book[1];
+    }
+  }
+  bookcaseHeight += currHeight;
+
+  return bookcaseHeight;
+};
+
+// testing
+var books1 = [[1, 1]];
+var width1 = 1;
+result1 = minHeightShelves(books1, width1);
+console.log(result1);  // 1
+
+var books2 = [[1,1], [1,1]];
+var width2 = 1;
+result2 = minHeightShelves(books2, width2);
+console.log(result2);  // 2
+
+var books3 = [[1,1], [1,1], [1,1]];
+var width3 = 1;
+result3 = minHeightShelves(books3, width3);
+console.log(result3);  // 3
+
+var books4 = [[1,1], [1,1]];
+var width4 = 2;
+result4 = minHeightShelves(books4, width4);
+console.log(result4);  // 1
+
+var books5 = [[1,1], [1,2]];
+var width5 = 1;
+result5 = minHeightShelves(books5, width5);
+console.log(result5);  // 3
+
+var books6 = [[2,1], [2, 1]]
+var width6 = 2;
+result6 = minHeightShelves(books6, width6);
+console.log(result6);  // 2
+
+var books7 = [[2,2], [2,2], [2,2]];
+var width7 = 3;
+result7 = minHeightShelves(books7, width7);
+console.log(result7);  // 6
+
+var books8 = [[1,1],[1,2],[1,3],[1,1],[1,1]];
+var width8 = 4;
+result8 = minHeightShelves(books8, width8);
+console.log(result8);  // 4
+
+var books9 = [[1,1],[2,3],[2,3],[1,1],[1,1],[1,1],[1,2]];
+var width9 = 4;
+result9 = minHeightShelves(books9, width9);
+console.log(result9);  // 6
+
+
