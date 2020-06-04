@@ -40,20 +40,33 @@ once one reaches a count of half of the length of the array, have to add the res
 */
 
 var twoCitySchedCost = function(costs) {
-  // let sentToA = 0;
-  // let sentToB = 0;
-  // const halfOfPool = costs.length / 2
-  // let runningTotal = 0;
+  let sentToA = 0;
+  let sentToB = 0;
+  const halfOfPool = costs.length / 2;
+  let runningTotal = 0;
 
   // sort costs by the absolutely value of the difference
+  costs.sort((element1, element2) => {
+    return Math.abs(element1[0] - element1[1]) - Math.abs(element2[0] - element2[1])
+  });
+
+  console.log(costs);
 
   // loop through the sorted array
+  for (let i = costs.length - 1; i >= 0; i -= 1) {
     // if A is less and sentToA is less than or equal to half of pool or sentToB is equal to half of pool
+    if (((costs[i][0] < costs[i][1]) && (sentToA < halfOfPool)) || (sentToB >= halfOfPool)) {
       // add A cost to running total
+      runningTotal += costs[i][0];
       // increment sentToA
-    // else
+      sentToA += 1;
+    } else {
       // add B cost to running total
+      runningTotal += costs[i][1];
       // increemnt sentToB
+      sentToB += 1;
+    }
+  }
 
-  // return runningTotal
+  return runningTotal;
 };
