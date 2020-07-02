@@ -50,35 +50,70 @@ but the order of that list in top to bottom
 to reverse, we pop off the items in that array and add them to a different array
 then return that array, now in correct order
 
+Alternate Plan for depth first search:
+need to track what dpeth we are on
+use indirect recursive technique to store arrays for different levels
+so we could still use a top down array and reverse it, or we could use unshift; but unshift is fairly expensive
+probably simpler to go with construct and then reverse
+
+depth would start at 0 for the head
+use a helper function that takes the node and the depth
+if the top down array does not have an eleent at the depth given, create an array to put there
+store the value of the current node in that depth's array
+recurse to the left child, adding 1 to the depth
+recurse to the right child, adding 1 to the depth
+
+reverse the constructed array and return that as the result
+
 */
 
 var levelOrderBottom = function(root) {
-  if (root === null) return [];
+  // BFS iterative solution:
+  // if (root === null) return [];
 
-  const results = [];
-  const topDown = [[root]];
+  // const results = [];
+  // const topDown = [[root]];
 
-  // build a queue of sorts with each level of the tree in a new array
-  for (var lastDepth = 0; lastDepth < topDown.length; lastDepth += 1) {
-    const lastDepthNodes = topDown[lastDepth];
-    const currentDepthNodes = [];
-    for (let i = 0; i < lastDepthNodes.length; i += 1) {
-      if (lastDepthNodes[i].left !== null) currentDepthNodes.push(lastDepthNodes[i].left);
-      if (lastDepthNodes[i].right !== null) currentDepthNodes.push(lastDepthNodes[i].right);
-    }
-    if (currentDepthNodes.length > 0) topDown.push(currentDepthNodes);
+  // // build a queue of sorts with each level of the tree in a new array
+  // for (var lastDepth = 0; lastDepth < topDown.length; lastDepth += 1) {
+  //   const lastDepthNodes = topDown[lastDepth];
+  //   const currentDepthNodes = [];
+  //   for (let i = 0; i < lastDepthNodes.length; i += 1) {
+  //     if (lastDepthNodes[i].left !== null) currentDepthNodes.push(lastDepthNodes[i].left);
+  //     if (lastDepthNodes[i].right !== null) currentDepthNodes.push(lastDepthNodes[i].right);
+  //   }
+  //   if (currentDepthNodes.length > 0) topDown.push(currentDepthNodes);
+  // }
+
+  // // go through the levels backwards to store the values in results array
+  // for (let depth = topDown.length - 1; depth >= 0; depth -= 1) {
+  //   const values = [];
+  //   for (let i = 0; i < topDown[depth].length; i += 1) {
+  //     values.push(topDown[depth][i].val);
+  //   }
+  //   results.push(values);
+  // }
+
+  // return results;
+
+  // recursive DFS solution:
+  const topDown = [];
+
+  const depthBuild = function(node, depth) {
+    if (node === null) return;
+
+    // if topDown does not have an element at this depth, add an array there
+    if (topDown[depth] === undefined) topDown[depth] = [];
+    // push value of node into new array
+    topDown[depth].push(node.val);
+    // recurse to left child
+    depthBuild(node.left, depth + 1);
+    // recurse to right child
+    depthBuild(node.right, depth + 1);
   }
 
-  // go through the levels backwards to store the values in results array
-  for (let depth = topDown.length - 1; depth >= 0; depth -= 1) {
-    const values = [];
-    for (let i = 0; i < topDown[depth].length; i += 1) {
-      values.push(topDown[depth][i].val);
-    }
-    results.push(values);
-  }
-
-  return results;
+  depthBuild(root, 0);
+  return topDown.reverse();
 };
 
 // testing
